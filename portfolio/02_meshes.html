@@ -1,25 +1,19 @@
-<!-- https://youtu.be/_xkSvufmjEs?si=mh-MXT2ZdUasYAYn&t=3416 -->
-<!-- adobe.ly/2GAgF93 -->
-<!-- https://scrimba.com/build-and-deploy-your-portfolio-c012 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="../img/face.jpg">
+    <link class="icon" type="image/svg+xml" href="../img/face.jpg">
 
-    <!-- Help auto scale for desktop & mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>STUDENT TODO Website</title>
+    <title>Procedural Geometric Modeling - Jonathan Cho</title>
 
-    <!-- Normalize the difference across browsers  https://necolas.github.io/normalize.css/ -->
     <link rel="stylesheet" href="../external/normalize.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
         integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
 
-    <!-- https://fonts.google.com/selection/embed -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -32,7 +26,6 @@
 <body>
     <header>
         <div class="logo">
-            <!-- alt text can be blank since the logo is purely decorative and putting something like logo isn't actually helpful -->
             <img src="../img/cout.jpg" alt="">
         </div>
         <button class="nav-toggle" aria-label="toggle navigation">
@@ -59,9 +52,7 @@
         </nav>
     </header>
 
-    <!-- Introduction -->
     <section class="intro">
-        <!-- TODO put the name of the assignment here -->
         <h1 class="section__title section__title--intro">
             Project <strong>Procedural Geometric Modeling</strong>
         </h1>
@@ -71,39 +62,52 @@
 
     <div class="portfolio-item-individual">
         <h2>Project Overview</h2>
-        <p>Provide a brief description of the project, its purpose, and what you aimed to achieve.</p>
+        <p>
+            The <strong>Procedural Geometric Modeling</strong> project focuses on the mathematical generation of 3D primitive geometries from scratch. 
+            Instead of loading external 3D model assets, this project utilizes pure procedural code to compute vertex attributes (positions, surface normals, and UV coordinates) 
+            and define structural topology via index buffers. The primary objective was to understand the underlying graphics pipeline pipeline mechanics and 
+            mathematical representations of basic 3D shapes, providing a reliable geometric foundation for modern real-time rendering systems.
+        </p>
 
         <h2>Tasks Completed</h2>
         <ul>
-            <li>Describe the tasks you completed for this project.</li>
-            <li>Be specific about your contributions and the technologies used.</li>
+            <li><strong>Index Buffer Architecture:</strong> Implemented the core <code>build_index_buffer()</code> infrastructure to generate efficient triangle-fan and triangle-strip arrangements across dynamic grid dimensions.</li>
+            <li><strong>Geometric Primitive Modeling:</strong> Developed the procedural math formulas to generate seamless vertices, analytical normals, and proportional texture mappings for <strong>Plane</strong>, <strong>Cube</strong>, <strong>Sphere</strong>, <strong>Torus</strong>, <strong>Cylinder</strong>, and <strong>Cone</strong> geometries.</li>
+            <li><strong>Pipeline Abstraction:</strong> Abstracted multi-layered primitive generation using C++20 structures, <code>std::span</code>, and custom OpenGL modern wrappers (<code>GL::</code> API) avoiding deprecated fixed-function calls.</li>
+            <li><strong>Dynamic Wireframe & Normal Visualizers:</strong> Implemented index-to-line pattern conversions (<code>convert_to_lines_pattern</code>) to support simultaneous solid texturing, wireframe toggles, and surface normal line rendering in real-time.</li>
+            <li><strong>Multi-Platform Integration:</strong> Registered the <code>ProceduralMeshes</code> subsystem into the core engine factory pipeline and configured dual-target compilation architectures for Windows x64 and Native WebAssembly (WASM/Emscripten).</li>
         </ul>
 
         <h2>Reflection</h2>
-        <p>Reflect on the project, discussing any challenges faced, solutions implemented, and what you learned from the
-            experience.</p>
+        <p>
+            This assignment heavily reinforced how 3D topologies are managed in modern GPU buffers. A significant technical challenge arose during integration testing under GCC and Emscripten Web environments. 
+            The compiler enforced strict strict promotion checks, resulting in <code>-Werror=double-promotion</code> failures due to automatic mathematical upscaling between literal double values and standard <code>float</code> datatypes within the application logic.
+        </p>
+        <p>
+            To prevent execution stalls, I standardized mathematical variables using explicit <code>constexpr float</code> configurations. 
+            However, this subsequently triggered secondary <code>-Werror=useless-cast</code> warnings where historical <code>static_cast&lt;float&gt;</code> markers became redundant. 
+            By entirely cleaning up the type-casting chains and isolating strict 3D float bounds, I successfully reduced compilation warnings to zero, securing stable cross-platform performance between desktop native rendering and real-time WebGL.
+        </p>
     </div>
 
     <div class="portfolio-item-individual">
         <h2>Demo</h2>
-        <iframe id="demo" src="../webgl/D02ProceduralMeshes/graphics_fun.html?start=meshes" tabindex="-1"></iframe>
+        <iframe id="demo" src="../webgl/meshes/graphics_fun.html" tabindex="-1"></iframe>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
-        <a href="mailto:my.email@digipen.edu" class="footer__link">my.email@digipen.edu</a>
+        <a href="mailto:cho.m@digipen.edu" class="footer__link">cho.m@digipen.edu</a>
         <ul class="social-list">
             <li class="social-list__item">
-                <a class="social-list__link" href="https://linkedin.com/in/mylinkedinid">
+                <a class="social-list__link" href="https://linkedin.com">
                     <i class="fab fa-linkedin"></i>
                 </a>
             </li>
             <li class="social-list__item">
-                <a class="social-list__link" href="https://github.com/mygithubid">
+                <a class="social-list__link" href="https://github.com">
                     <i class="fab fa-github"></i>
                 </a>
             </li>
-            <!-- Want to list more? search : https://fontawesome.com/v5/search?ic=brands -->
         </ul>
     </footer>
 
